@@ -1,74 +1,81 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define Pi 3.14
+
+struct cir {
+    double x;
+    double y;
+    double r;
+};
 
 int main()
 {
     FILE* file = fopen("output.txt", "r");
-    int a = 0, b = 0;
-    int i = 0, k = 0, N = 100, number_of_figures;
-    char *str = NULL, cir[] = {"circle"}, tri[] = {"triangle"}, numbers[N];
+
+    int i = 0, N = 100, number_of_figures;
+    char *str = NULL, cir[] = {"circle"};
+    char* num = NULL;
+    num = malloc(100 * sizeof(char));
+    char* figure = NULL;
+    figure = malloc(100 * sizeof(char));
 
     printf("Enter the number figures : ");
     scanf("%d", &number_of_figures);
-
-    for (i = 0; i < number_of_figures; i++) {
+    printf("\n");
+    for (int p = 0; p < number_of_figures; p++) {
         str = malloc(N * sizeof(char));
         fgets(str, 100, file);
 
         if (strstr(str, cir) != NULL) { // circle(0 0, 1.5)
-            for (int p = 0; p < N; p++) {
-                if (str[p] == 41) {
-                    break;
+            struct cir circle;
+            char* cor1 = malloc(20 * sizeof(char));
+            char* cor2 = malloc(20 * sizeof(char));
+            char* rad = malloc(20 * sizeof(char));
+            while (str[i] != '\0') {
+                if ((str[i] >= 'A' && str[i] <= 'Z')
+                    || (str[i] >= 'a' && str[i] <= 'z')) {
+                    strncat(figure, &str[i], 1);
                 }
-                if ((str[p] >= 48 && str[p] <= 57) || str[p] == 44
-                    || str[p] == 46 || str[p] == 32 || str[p] == 45) {
-                    k++;
-                    numbers[k] = str[p];
-                    if (a == 0) {
-                        printf("circle(");
-                        a++;
-                    }
-                    printf("%c", numbers[k]);
-                }
+                i++;
             }
-            a = 0;
-            if (b == 0) {
-                printf(")");
-                b++;
-            }
-            printf("\n");
-            b = 0;
-        } else if (strstr(str, tri) != NULL) { // triangle((-3.0 -2, -1 0.0,
-                                               // -3.0 2.0, -3 -2))
-            for (int p = 0; p < N - 1; p++) {
-                if (str[p] == 41) {
-                    break;
+            i = 0;
+            while (str[i] != ')') {
+                if (str[i] == '-')
+                    strncat(num, &str[i], 1);
+                if ((str[i] >= '0' && str[i] <= '9') || str[i] == '.') {
+                    strncat(num, &str[i], 1);
                 }
-                if ((str[p] >= 48 && str[p] <= 57) || str[p] == 44
-                    || str[p] == 46 || str[p] == 32 || str[p] == 45) {
-                    k++;
-                    numbers[k] = str[p];
-                    if (a == 0) {
-                        printf("triangle((");
-                        a++;
-                    }
-                    printf("%c", numbers[k]);
+                i++;
+                if (str[i] == ' ' && str[i - 1] != ',') {
+                    strcpy(cor1, num);
+                    strcpy(num, "");
+                    circle.x = atof(cor1);
+                }
+                if (str[i] == ',') {
+                    strcpy(cor2, num);
+                    strcpy(num, "");
+                    circle.y = atof(cor2);
+                }
+                if (str[i] == ')') {
+                    strcpy(rad, num);
+                    strcpy(num, "");
+                    circle.r = atof(rad);
                 }
             }
-            a = 0;
-            if (b == 0) {
-                printf("))");
-                b++;
+            printf("%s(%.1f %.1f, %.1f)\n",
+                   figure,
+                   circle.x,
+                   circle.y,
+                   circle.r);
+            if (circle.r < 0) {
+                printf("Error, radius < 0\n");
+                return -1;
             }
-            printf("\n");
-            b = 0;
+            printf("perimeter = %.4f\n", 2 * Pi * circle.r);
+            printf("area = %.1f\n\n", Pi * circle.r * circle.r);
         }
     }
-
-    printf("\n");
-    free(str);
-
     fclose(file);
 
     return 0;
