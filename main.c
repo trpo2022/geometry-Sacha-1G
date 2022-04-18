@@ -72,8 +72,6 @@ int main()
                 printf("Error, radius < 0\n");
                 return -1;
             }
-            printf("perimeter = %.4f\n", 2 * Pi * circle.r);
-            printf("area = %.1f\n\n", Pi * circle.r * circle.r);
         }
     }
     fclose(file);
