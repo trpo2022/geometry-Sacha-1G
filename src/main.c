@@ -15,6 +15,8 @@ int main()
         circle.name = name_figure(figure);
         circle.cords = cordinates(figure);
         print_circle(circle);
+        print_area(circle);
+        print_perimetre(circle);
     }
     fclose(file);
 

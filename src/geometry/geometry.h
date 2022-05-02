@@ -21,3 +21,7 @@ char* name_figure(char* figure);
 struct cords cordinates(char* figure);
 
 void print_circle(struct circle circle);
+
+void print_area(struct circle circle);
+
+void print_perimetre(struct circle circle);

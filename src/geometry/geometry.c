@@ -76,3 +76,25 @@ void print_circle(struct circle circle)
                circle.cords.rad);
     }
 }
+
+void print_area(struct circle circle)
+{
+    if ((circle.cords.rad < 0) || (!circle.name)) {
+        return;
+    }
+
+    else {
+        printf("Area: %.1f\n", Pi * circle.cords.rad * circle.cords.rad);
+    }
+}
+
+void print_perimetre(struct circle circle)
+{
+    if ((circle.cords.rad < 0) || (!circle.name)) {
+        return;
+    }
+
+    else {
+        printf("Perimetre: %.1f\n", 2 * Pi * circle.cords.rad);
+    }
+}
