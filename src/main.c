@@ -13,7 +13,8 @@ int main()
         char* figure = malloc(sizeof(char) * 100);
         fgets(figure, 100, file);
         circle.name = name_figure(figure);
-        printf("%s\n", circle.name);
+        circle.cords = cordinates(figure);
+        print_circle(circle);
     }
     fclose(file);
 

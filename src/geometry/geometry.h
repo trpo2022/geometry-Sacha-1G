@@ -17,3 +17,7 @@ struct circle {
 };
 
 char* name_figure(char* figure);
+
+struct cords cordinates(char* figure);
+
+void print_circle(struct circle circle);
