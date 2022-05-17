@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@lab4
 
       - name: Check codestyle
         run: git ls-files *.{c,h} | xargs clang-format -i --verbose && git diff --exit-code
